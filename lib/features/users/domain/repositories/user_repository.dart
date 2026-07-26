@@ -12,4 +12,9 @@ abstract class UserRepository {
   Future<void> updateUser(UserEntity user);
 
   Future<void> deleteUser(String userId);
+
+  Future<UserEntity?> login({
+    required String email,
+    required String password,
+  });
 }

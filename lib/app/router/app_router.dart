@@ -1,4 +1,5 @@
 import 'package:financial_transfer_app/features/auth/presentation/pages/login_page.dart';
+import 'package:financial_transfer_app/features/users/presentation/pages/users_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -8,6 +9,10 @@ class AppRouter {
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/users',
+        builder: (context, state) => const UsersPage(),
       ),
     ],
   );

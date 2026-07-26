@@ -90,4 +90,22 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<void> deleteUser(String userId) async {
     // Lo implementaremos en el siguiente paso.
   }
+
+  @override
+  Future<UserModel?> login({
+    required String email,
+    required String password,
+  }) async {
+    final users = await getUsers();
+
+    try {
+      return users.firstWhere(
+        (user) =>
+            user.email.toLowerCase() == email.toLowerCase().trim() &&
+            user.password == password,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
 }

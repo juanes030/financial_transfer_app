@@ -9,6 +9,10 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:financial_transfer_app/core/services/app_initializer.dart'
+    as _i69;
+import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart'
+    as _i660;
 import 'package:financial_transfer_app/features/users/data/datasources/local/user_local_data_source.dart'
     as _i589;
 import 'package:financial_transfer_app/features/users/data/datasources/local/user_local_data_source_impl.dart'
@@ -44,6 +48,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i933.UserRepository>(
       () => _i230.UserRepositoryImpl(gh<_i589.UserLocalDataSource>()),
+    );
+    gh.lazySingleton<_i69.AppInitializer>(
+      () => _i69.AppInitializer(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i660.AuthBloc>(
+      () => _i660.AuthBloc(gh<_i933.UserRepository>()),
     );
     return this;
   }

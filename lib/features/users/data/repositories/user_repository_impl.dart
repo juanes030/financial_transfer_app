@@ -43,4 +43,15 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> deleteUser(String userId) {
     return _localDataSource.deleteUser(userId);
   }
+
+  @override
+  Future<UserEntity?> login({
+    required String email,
+    required String password,
+  }) {
+    return _localDataSource.login(
+      email: email,
+      password: password,
+    );
+  }
 }

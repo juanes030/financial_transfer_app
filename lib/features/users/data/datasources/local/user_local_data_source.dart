@@ -14,4 +14,9 @@ abstract class UserLocalDataSource {
   Future<void> updateUser(UserModel user);
 
   Future<void> deleteUser(String userId);
+
+  Future<UserModel?> login({
+    required String email,
+    required String password,
+  });
 }
