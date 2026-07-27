@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:financial_transfer_app/core/services/app_initializer.dart'
     as _i69;
+import 'package:financial_transfer_app/features/auth/domain/usecases/login_usecase.dart'
+    as _i413;
 import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i660;
 import 'package:financial_transfer_app/features/users/data/datasources/local/user_local_data_source.dart'
@@ -21,6 +23,16 @@ import 'package:financial_transfer_app/features/users/data/repositories/user_rep
     as _i230;
 import 'package:financial_transfer_app/features/users/domain/repositories/user_repository.dart'
     as _i933;
+import 'package:financial_transfer_app/features/users/domain/usecases/create_user_usecase.dart'
+    as _i904;
+import 'package:financial_transfer_app/features/users/domain/usecases/delete_user_usecase.dart'
+    as _i77;
+import 'package:financial_transfer_app/features/users/domain/usecases/get_users_usecase.dart'
+    as _i770;
+import 'package:financial_transfer_app/features/users/domain/usecases/update_user_usecase.dart'
+    as _i6;
+import 'package:financial_transfer_app/features/users/presentation/bloc/users/users_bloc.dart'
+    as _i581;
 import 'package:financial_transfer_app/injection/register_module.dart' as _i312;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -52,8 +64,30 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i69.AppInitializer>(
       () => _i69.AppInitializer(gh<_i933.UserRepository>()),
     );
+    gh.factory<_i413.LoginUseCase>(
+      () => _i413.LoginUseCase(gh<_i933.UserRepository>()),
+    );
     gh.factory<_i660.AuthBloc>(
       () => _i660.AuthBloc(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i904.CreateUserUseCase>(
+      () => _i904.CreateUserUseCase(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i77.DeleteUserUseCase>(
+      () => _i77.DeleteUserUseCase(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i770.GetUsersUseCase>(
+      () => _i770.GetUsersUseCase(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i6.UpdateUserUseCase>(
+      () => _i6.UpdateUserUseCase(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i581.UsersBloc>(
+      () => _i581.UsersBloc(
+        gh<_i770.GetUsersUseCase>(),
+        gh<_i904.CreateUserUseCase>(),
+        gh<_i77.DeleteUserUseCase>(),
+      ),
     );
     return this;
   }
