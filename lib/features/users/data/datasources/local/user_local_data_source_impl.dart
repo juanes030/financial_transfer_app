@@ -72,23 +72,52 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<UserModel?> findByEmail(String email) async {
-    // Lo implementaremos en el siguiente paso.
-    return null;
+    final users = await getUsers();
+
+    try {
+      return users.firstWhere(
+        (user) => user.email.toLowerCase() == email.toLowerCase().trim(),
+      );
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
   Future<void> saveUser(UserModel user) async {
-    // Lo implementaremos en el siguiente paso.
+    final users = await getUsers();
+
+    users.add(user);
+
+    await saveUsers(users);
   }
 
   @override
   Future<void> updateUser(UserModel user) async {
-    // Lo implementaremos en el siguiente paso.
+    final users = await getUsers();
+
+    final index = users.indexWhere(
+      (u) => u.id == user.id,
+    );
+
+    if (index == -1) {
+      return;
+    }
+
+    users[index] = user;
+
+    await saveUsers(users);
   }
 
   @override
   Future<void> deleteUser(String userId) async {
-    // Lo implementaremos en el siguiente paso.
+    final users = await getUsers();
+
+    users.removeWhere(
+      (user) => user.id == userId,
+    );
+
+    await saveUsers(users);
   }
 
   @override
