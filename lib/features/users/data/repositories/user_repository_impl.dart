@@ -54,4 +54,20 @@ class UserRepositoryImpl implements UserRepository {
       password: password,
     );
   }
+
+  @override
+  Future<UserEntity?> findById(String id) {
+    return _localDataSource.findById(id);
+  }
+
+  @override
+  Future<void> updateUsers({
+    required UserEntity sourceUser,
+    required UserEntity destinationUser,
+  }) {
+    return _localDataSource.updateUsers(
+      sourceUser: UserModel.fromEntity(sourceUser),
+      destinationUser: UserModel.fromEntity(destinationUser),
+    );
+  }
 }

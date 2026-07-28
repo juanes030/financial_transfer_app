@@ -17,4 +17,11 @@ abstract class UserRepository {
     required String email,
     required String password,
   });
+
+  Future<UserEntity?> findById(String id);
+
+  Future<void> updateUsers({
+    required UserEntity sourceUser,
+    required UserEntity destinationUser,
+  });
 }

@@ -137,4 +137,43 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       return null;
     }
   }
+
+  @override
+  Future<UserModel?> findById(String id) async {
+    final users = await getUsers();
+
+    try {
+      return users.firstWhere(
+        (user) => user.id == id,
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> updateUsers({
+    required UserModel sourceUser,
+    required UserModel destinationUser,
+  }) async {
+    final users = await getUsers();
+
+    final sourceIndex = users.indexWhere(
+      (user) => user.id == sourceUser.id,
+    );
+
+    final destinationIndex = users.indexWhere(
+      (user) => user.id == destinationUser.id,
+    );
+
+    if (sourceIndex == -1 || destinationIndex == -1) {
+      return;
+    }
+
+    users[sourceIndex] = sourceUser;
+
+    users[destinationIndex] = destinationUser;
+
+    await saveUsers(users);
+  }
 }

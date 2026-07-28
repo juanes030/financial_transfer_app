@@ -19,4 +19,11 @@ abstract class UserLocalDataSource {
     required String email,
     required String password,
   });
+
+  Future<UserModel?> findById(String id);
+
+  Future<void> updateUsers({
+    required UserModel sourceUser,
+    required UserModel destinationUser,
+  });
 }

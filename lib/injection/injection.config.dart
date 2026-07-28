@@ -11,6 +11,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:financial_transfer_app/core/services/app_initializer.dart'
     as _i69;
+import 'package:financial_transfer_app/core/services/receipt_generator_service.dart'
+    as _i42;
+import 'package:financial_transfer_app/core/services/receipt_generator_service_impl.dart'
+    as _i256;
 import 'package:financial_transfer_app/features/auth/domain/usecases/login_usecase.dart'
     as _i413;
 import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart'
@@ -57,6 +61,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i460.SharedPreferences>(),
         gh<_i706.Uuid>(),
       ),
+    );
+    gh.lazySingleton<_i42.ReceiptGeneratorService>(
+      () => _i256.ReceiptGeneratorServiceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i933.UserRepository>(
       () => _i230.UserRepositoryImpl(gh<_i589.UserLocalDataSource>()),
