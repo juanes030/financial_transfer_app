@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
         }
 
         if (state is AuthAuthenticated) {
-          context.go('/users');
+          context.go('/home');
         }
       },
       builder: (context, state) {

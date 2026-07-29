@@ -25,6 +25,8 @@ class UserDropdown extends StatelessWidget {
 
     return DropdownButtonFormField<String>(
       value: selectedUserId,
+      isExpanded: true,
+      itemHeight: null,
       decoration: InputDecoration(
         labelText: label,
         border: const OutlineInputBorder(),
@@ -32,22 +34,26 @@ class UserDropdown extends StatelessWidget {
       items: availableUsers.map((user) {
         return DropdownMenuItem<String>(
           value: user.id,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                user.name,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                'Saldo: \$${user.balance}',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Text(
+              user.name,
+              overflow: TextOverflow.ellipsis,
+            )
           ),
         );
       }).toList(),
+      selectedItemBuilder: (context) {
+        return availableUsers.map((user) {
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              user.name,
+              overflow: TextOverflow.ellipsis,
+            ),
+          );
+        }).toList();
+      },
       onChanged: onChanged,
       validator: (value) {
         if (value == null) {

@@ -1,5 +1,6 @@
 import 'package:financial_transfer_app/app/router/app_router.dart';
 import 'package:financial_transfer_app/app/theme/app_theme.dart';
+import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/bloc/transfer/transfer_bloc.dart';
 import 'package:financial_transfer_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:financial_transfer_app/injection/injection.dart';
@@ -18,6 +19,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<TransferBloc>(
           create: (_) => getIt<TransferBloc>(),
+        ),
+        BlocProvider<AuthBloc>(
+          create: (_) => getIt<AuthBloc>(),
         ),
       ],
       child: MaterialApp.router(

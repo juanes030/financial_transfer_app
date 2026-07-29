@@ -19,6 +19,18 @@ import 'package:financial_transfer_app/features/auth/domain/usecases/login_useca
     as _i413;
 import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i660;
+import 'package:financial_transfer_app/features/transfers/data/datasources/local/transfer_local_data_source.dart'
+    as _i148;
+import 'package:financial_transfer_app/features/transfers/data/datasources/local/transfer_local_data_source_impl.dart'
+    as _i851;
+import 'package:financial_transfer_app/features/transfers/data/repositories/transfer_repository_impl.dart'
+    as _i956;
+import 'package:financial_transfer_app/features/transfers/domain/repositories/transfer_repository.dart'
+    as _i176;
+import 'package:financial_transfer_app/features/transfers/domain/usecases/perform_transfer_usecase.dart'
+    as _i334;
+import 'package:financial_transfer_app/features/transfers/presentation/bloc/transfer/transfer_bloc.dart'
+    as _i585;
 import 'package:financial_transfer_app/features/users/data/datasources/local/user_local_data_source.dart'
     as _i589;
 import 'package:financial_transfer_app/features/users/data/datasources/local/user_local_data_source_impl.dart'
@@ -56,6 +68,9 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i706.Uuid>(() => registerModule.uuid);
+    gh.lazySingleton<_i148.TransferLocalDataSource>(
+      () => _i851.TransferLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i589.UserLocalDataSource>(
       () => _i944.UserLocalDataSourceImpl(
         gh<_i460.SharedPreferences>(),
@@ -67,6 +82,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i933.UserRepository>(
       () => _i230.UserRepositoryImpl(gh<_i589.UserLocalDataSource>()),
+    );
+    gh.lazySingleton<_i176.TransferRepository>(
+      () => _i956.TransferRepositoryImpl(gh<_i148.TransferLocalDataSource>()),
     );
     gh.lazySingleton<_i69.AppInitializer>(
       () => _i69.AppInitializer(gh<_i933.UserRepository>()),
@@ -88,6 +106,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i6.UpdateUserUseCase>(
       () => _i6.UpdateUserUseCase(gh<_i933.UserRepository>()),
+    );
+    gh.factory<_i334.PerformTransferUseCase>(
+      () => _i334.PerformTransferUseCase(
+        gh<_i933.UserRepository>(),
+        gh<_i176.TransferRepository>(),
+        gh<_i42.ReceiptGeneratorService>(),
+        gh<_i706.Uuid>(),
+      ),
+    );
+    gh.factory<_i585.TransferBloc>(
+      () => _i585.TransferBloc(gh<_i334.PerformTransferUseCase>()),
     );
     gh.factory<_i581.UsersBloc>(
       () => _i581.UsersBloc(

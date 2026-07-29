@@ -1,10 +1,14 @@
+import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:financial_transfer_app/features/auth/presentation/bloc/auth/auth_state.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/bloc/transfer/transfer_bloc.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/bloc/transfer/transfer_event.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/bloc/transfer/transfer_state.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/widgets/amount_text_field.dart';
+import 'package:financial_transfer_app/features/transfers/presentation/widgets/source_account_card.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/widgets/transfer_success_dialog.dart';
 import 'package:financial_transfer_app/features/transfers/presentation/widgets/user_dropdown.dart';
 import 'package:financial_transfer_app/features/users/domain/entities/user_entity.dart';
+import 'package:financial_transfer_app/features/users/domain/entities/user_role.dart';
 import 'package:financial_transfer_app/features/users/presentation/bloc/users/users_bloc.dart';
 import 'package:financial_transfer_app/features/users/presentation/bloc/users/users_event.dart';
 import 'package:financial_transfer_app/features/users/presentation/bloc/users/users_state.dart';
@@ -97,27 +101,35 @@ class _TransferFormState extends State<TransferForm> {
 
             final List<UserEntity> users = usersState.users;
 
+            final authState = context.watch<AuthBloc>().state;
+
+            if (authState is! AuthAuthenticated) {
+              return const SizedBox.shrink();
+            }
+
+            final currentUser = authState.user;
+
+            // El usuario autenticado siempre será el origen.
+            _sourceUserId ??= currentUser.id;
+
+            // Usuarios disponibles para recibir la transferencia.
+            final destinationUsers = users.where((user) {
+              return user.id != currentUser.id &&
+                  user.role != UserRole.admin;
+            }).toList();
+
             return Form(
               key: _formKey,
               child: Column(
                 children: [
-                  UserDropdown(
-                    label: 'Usuario origen',
-                    users: users,
-                    selectedUserId: _sourceUserId,
-                    excludedUserId: _destinationUserId,
-                    onChanged: (value) {
-                      setState(() {
-                        _sourceUserId = value;
-                      });
-                    },
+                  SourceAccountCard(
+                    user: currentUser,
                   ),
                   const SizedBox(height: 16),
                   UserDropdown(
                     label: 'Usuario destino',
-                    users: users,
+                    users: destinationUsers,
                     selectedUserId: _destinationUserId,
-                    excludedUserId: _sourceUserId,
                     onChanged: (value) {
                       setState(() {
                         _destinationUserId = value;
