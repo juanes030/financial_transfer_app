@@ -1,3 +1,4 @@
+import 'package:financial_transfer_app/core/utils/currency_formatter.dart';
 import 'package:financial_transfer_app/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class SourceAccountCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Saldo disponible: \$${user.balance}',
+            'Saldo disponible: \$${CurrencyFormatter.money.format(user.balance)}',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

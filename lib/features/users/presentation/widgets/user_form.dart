@@ -37,7 +37,7 @@ class _UserFormState extends State<UserForm> {
       _nameController.text = widget.user!.name;
       _emailController.text = widget.user!.email;
       _passwordController.text = widget.user!.password;
-      _balanceController.text = widget.user!.balance.toStringAsFixed(2);
+      _balanceController.text = widget.user!.balance.toString();
     }
   }
 
@@ -141,7 +141,7 @@ class _UserFormState extends State<UserForm> {
                 return 'Ingrese el saldo';
               }
 
-              final balance = double.tryParse(value);
+              final balance = int.tryParse(value);
 
               if (balance == null) {
                 return 'Saldo inválido';
