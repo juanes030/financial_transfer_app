@@ -68,7 +68,7 @@ class _UsersPageState extends State<UsersPage> {
                 return UserCard(
                   user: user,
                   onEdit: () {
-                    // Próximamente.
+                    
                   },
                   onDelete: () {
                     context.read<UsersBloc>().add(

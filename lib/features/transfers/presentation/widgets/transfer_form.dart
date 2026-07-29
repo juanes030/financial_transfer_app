@@ -109,10 +109,8 @@ class _TransferFormState extends State<TransferForm> {
 
             final currentUser = authState.user;
 
-            // El usuario autenticado siempre será el origen.
             _sourceUserId ??= currentUser.id;
 
-            // Usuarios disponibles para recibir la transferencia.
             final destinationUsers = users.where((user) {
               return user.id != currentUser.id &&
                   user.role != UserRole.admin;
