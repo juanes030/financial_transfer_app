@@ -24,7 +24,7 @@ class UserDropdown extends StatelessWidget {
         .toList();
 
     return DropdownButtonFormField<String>(
-      value: selectedUserId,
+      initialValue: selectedUserId,
       isExpanded: true,
       itemHeight: null,
       decoration: InputDecoration(

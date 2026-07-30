@@ -58,24 +58,7 @@ class _TransferFormState extends State<TransferForm> {
         }
 
         if (state is TransferSuccess) {
-          await showDialog(
-            context: context,
-            builder: (_) => TransferSuccessDialog(
-              transfer: state.transfer,
-            ),
-          );
-
-          if (!mounted) return;
-
-          context.read<TransferBloc>().add(
-                const ResetTransferStateRequested(),
-              );
-
-          context.read<UsersBloc>().add(
-                const LoadUsersRequested(),
-              );
-
-          _clearForm();
+          await _handleTransferSuccess(state);
         }
       },
       builder: (context, transferState) {
@@ -180,5 +163,28 @@ class _TransferFormState extends State<TransferForm> {
         );
       },
     );
+  }
+
+  Future<void> _handleTransferSuccess(
+    TransferSuccess state,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (_) => TransferSuccessDialog(
+        transfer: state.transfer,
+      ),
+    );
+
+    if (!mounted) return;
+
+    context.read<TransferBloc>().add(
+      const ResetTransferStateRequested(),
+    );
+
+    context.read<UsersBloc>().add(
+      const LoadUsersRequested(),
+    );
+
+    _clearForm();
   }
 }
